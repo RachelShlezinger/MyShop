@@ -1,0 +1,45 @@
+<div class="shop">
+  <mat-toolbar>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My shop</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="shop-content">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <input matInput placeholder="חיפוש" [formControl]="search">
+      <button (click)="searchProduct()">חפש</button>
+      <button (click)="deleteSearch()">נקה חיפוש</button>
+    </mat-form-field>
+
+    <mat-accordion *ngIf="!isSearch || !search.value">
+      <mat-expansion-panel *ngFor="let product of listProducts" (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{product.Name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let list of product.List">
+          {{list.Name}}
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <div *ngIf="isSearch && search.value" class="cards">
+      <div *ngFor="let product of listProducts">
+        <shop-card [product]="product"></shop-card>
+      </div>
+    </div>
+
+    <span *ngIf="!listProducts">סורי, אין ברשותינו כרצונך...</span>
+  </div>
+</div>
